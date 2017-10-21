@@ -34,10 +34,17 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     @Override
     public void onBindViewHolder(UserRecyclerViewAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        User user = users.get(position);
+        final User user = users.get(position);
         // Set item views based on the data model
         holder.tvName.setText(user.name);
         holder.tvHometown.setText(user.hometown);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), user.name, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     // Return the total count of users
@@ -48,7 +55,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
         public TextView tvHometown;
         private Context context;
@@ -58,13 +65,6 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             this.context = context;
             this.tvName = (TextView) itemView.findViewById(R.id.tvName);
             this.tvHometown = (TextView) itemView.findViewById(R.id.tvHometown);
-            itemView.setOnClickListener(this);
-        }
-
-        // Handles an item being clicked
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(context, tvName.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 }
